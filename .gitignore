@@ -8,3 +8,6 @@ config/calendar-nodejs-quickstart.json
 
 # execlude logs
 npm-debug.log
+
+# execlude webstorm stuff
+.idea/*
