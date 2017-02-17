@@ -13,7 +13,7 @@
 2. Write it down, save it, whatever. Just make sure, you can access it and don't have to rerun the whole process. Trust me, I've been there...
 
 ## Step 3: Install MongoDB
-_In case you already installed mongoDB skip this step, otherwise:_
+##### In case you already installed mongoDB skip this step, otherwise:
 1. Download mongoDB Community Server for your OS [https://www.mongodb.com/download-center](https://www.mongodb.com/download-center)
 2. Install it...
 3. Run it
@@ -53,6 +53,7 @@ _In case you already installed mongoDB skip this step, otherwise:_
     
 * `/positions`
     * returns all trips, including:
+    
         ```javascript
         var TripSchema = new mongoose.Schema({
             gCalID: {type: String, required: true, unique: true},
