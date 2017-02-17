@@ -1,0 +1,10 @@
+# execlude node-modules
+node_modules
+
+# execlude secrets
+config/options.prod.js
+config/client_secret.json
+config/calendar-nodejs-quickstart.json
+
+# execlude logs
+npm-debug.log
