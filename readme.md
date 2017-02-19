@@ -62,7 +62,8 @@
             location: {
                 name: String,
                 latitude: {type: Number, required: true},
-                longitude: {type: Number, required: true}
+                longitude: {type: Number, required: true},
+                distanceFromHome: Number
             },
             description: String,
             summary: String,
