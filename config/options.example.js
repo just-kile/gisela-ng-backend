@@ -12,7 +12,12 @@ var options = {
         // Calendar ID of Gisela
         calendarId: 'GISELA_CALENDAR_ID@group.calendar.google.com',
         // Grab all trips starting from:
-        queryStartDate: '2014-01-01T00:00:00+00:00'
+        queryStartDate: '2014-01-01T00:00:00+00:00',
+        // home GPS location (here: "Alter Markt, 12555 Berlin")
+        homeCoordinates: {
+            latitude: 52.446089,
+            longitude: 13.578840
+        }
     }
 };
 

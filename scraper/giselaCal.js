@@ -6,6 +6,7 @@ var googleAuth = require('google-auth-library');
 var uniqueValidator = require('mongoose-unique-validator');
 var mongoose = require('mongoose');
 var NodeGeocoder = require('node-geocoder');
+var geolib = require('geolib');
 
 /** configuration files **/
 var global = require('./../config/options.prod');
@@ -161,6 +162,21 @@ function listEvents(auth) {
     });
 }
 
+function distanceFromHome(homeCoordinates, tripCoordinates) {
+    // check if all parameters are set
+    if (homeCoordinates.latitude && homeCoordinates.longitude && tripCoordinates.latitude && tripCoordinates.longitude) {
+        // get distance between two location-objects
+        var distInMeters = geolib.getDistance(
+            // coordinates of homebase
+            {latitude: global.google.homeCoordinates.latitude, longitude: global.google.homeCoordinates.longitude},
+            // coordinates of the trip
+            {latitude: tripCoordinates.latitude, longitude: tripCoordinates.longitude}
+        );
+
+        return geolib.convertUnit('km',distInMeters,0);
+    }
+}
+
 
 /**
  * Search for geocoded location of
@@ -174,6 +190,9 @@ function enterIntoMongoDb(gcalevent) {
             // check if a valid result was returned
             if(res[0] && res[0].latitude && res[0].longitude) {
                 console.log('[Geocoder] Found location for: ', gcalevent.location);
+                var distFromHome = distanceFromHome(global.google.homeCoordinates,
+                    {latitude: res[0].latitude, longitude: res[0].longitude});
+                console.log('[Geolib] Distance from home (in km): ', distFromHome);
 
                 // create new database-entry for this trip
                 var trip = new Trip({
@@ -183,7 +202,8 @@ function enterIntoMongoDb(gcalevent) {
                     location: {
                         name: gcalevent.location,
                         latitude: res[0].latitude,
-                        longitude: res[0].longitude
+                        longitude: res[0].longitude,
+                        distanceFromHome: distFromHome
                     },
                     summary: gcalevent.summary,
                     description: gcalevent.description
@@ -221,7 +241,8 @@ var TripSchema = new mongoose.Schema({
     location: {
         name: String,
         latitude: {type: Number, required: true},
-        longitude: {type: Number, required: true}
+        longitude: {type: Number, required: true},
+        distanceFromHome: Number
     },
     description: String,
     summary: String,
