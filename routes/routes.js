@@ -59,6 +59,11 @@ var appRouter = function(app) {
             res.send(positions);
         });
     });
+
+    // ssl-cert
+    app.get("/.well-known/acme-challenge/PWTI_nxJvY-8lGyJQQ_nWUJHcuo2QxJS3pIPHGdTl64", function (req,res) {
+	res.send("PWTI_nxJvY-8lGyJQQ_nWUJHcuo2QxJS3pIPHGdTl64.3tHlxFn-rNupGTJ94sfX45CUw0LXI9DmYPKhRa3_qdE");
+    });
 };
 
 
